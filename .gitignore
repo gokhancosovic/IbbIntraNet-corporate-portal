@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+corporate-portal-ui/node_modules/
+corporate-portal-ui/dist/
