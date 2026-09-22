@@ -1,7 +1,5 @@
 package com.example.corporateportal.dto;
 
-import com.example.corporateportal.entity.LeaveStatus;
-import com.example.corporateportal.entity.LeaveType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,8 +14,6 @@ public class LeaveRequestResponse {
     private Long id;
     private Long userId;
     private String userFullName;
-    private LeaveType leaveType;
-    private LeaveStatus status;
     private LocalDate startDate;
     private LocalDate endDate;
     private String reason;

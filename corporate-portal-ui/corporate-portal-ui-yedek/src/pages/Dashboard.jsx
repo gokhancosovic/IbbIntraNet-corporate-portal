@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+    Phone,
     Utensils,
     CalendarCheck,
     Users,
@@ -8,7 +9,9 @@ import {
     Bell,
     FileText,
     ChevronLeft,
-    ChevronRight
+    ChevronRight,
+    Landmark,
+    Headphones
 } from 'lucide-react';
 import RightWidget from '../components/RightWidget';
 
@@ -44,6 +47,24 @@ const slides = [
 
 const services = [
     {
+        icon: Phone,
+        title: 'Telefon Rehberi',
+        path: '/rehber',
+        badge: 'İç Hatlar'
+    },
+    {
+        icon: Landmark,
+        title: 'Kurumsal Bilgiler',
+        path: '/kurumsal',
+        badge: 'Hakkımızda'
+    },
+    {
+        icon: Headphones,
+        title: 'İletişim & Destek',
+        path: '/iletisim',
+        badge: 'Destek Hattı'
+    },
+    {
         icon: Utensils,
         title: 'Yemek Menüsü',
         path: '/yemek-listesi',
@@ -57,9 +78,9 @@ const services = [
     },
     {
         icon: Users,
-        title: 'Personel Rehberi',
+        title: 'Personel Listesi',
         path: '/kullanicilar',
-        badge: 'Rehber'
+        badge: 'Kullanıcılar'
     },
     {
         icon: Building2,

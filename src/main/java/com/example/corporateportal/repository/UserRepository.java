@@ -2,25 +2,20 @@ package com.example.corporateportal.repository;
 
 import com.example.corporateportal.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 import java.util.Optional;
+import java.util.List;
 
-@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // Kullanıcı adına göre kullanıcıyı getir (Login için gerekecek)
+    // Zaten eklediğimiz metod
     Optional<User> findByUsername(String username);
 
-    // Email adresine göre kullanıcıyı getir
-    Optional<User> findByEmail(String email);
+    // Eksik olan ve UserService'in aradığı metodlar
+    List<User> findAllByIsActiveTrue();
 
-    // Kayıt olurken veya yeni personel eklerken aynı kullanıcı adı var mı kontrolü
+    Optional<User> findByIdAndIsActiveTrue(Long id);
+
     boolean existsByUsername(String username);
 
-    // Aynı email sistemde zaten kayıtlı mı kontrolü
     boolean existsByEmail(String email);
-    List<User> findAllByIsActiveTrue();
-    Optional<User> findByIdAndIsActiveTrue(Long id);
 }

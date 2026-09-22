@@ -1,32 +1,36 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Sidebar from './components/Sidebar';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
-import LeaveRequestsPage from './pages/LeaveRequestsPage';
-import CafeteriaMenuPage from './pages/CafeteriaMenuPage';
+import Login from './pages/Login';
 import AnnouncementsPage from './pages/AnnouncementsPage';
+import NewsPage from './pages/NewsPage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 export default function App() {
     return (
-        <BrowserRouter>
-            <div className="flex min-h-screen bg-slate-100 font-sans text-slate-800">
-                {/* Sol Dikey Menü */}
-                <Sidebar />
+        <Routes>
+            {/* 1. GİRİŞ SAYFASI */}
+            <Route path="/login" element={<Login />} />
 
-                {/* Sağ Ana Gövde */}
-                <div className="flex-1 flex flex-col min-w-0">
-                    <Navbar />
-                    <main className="flex-1 overflow-y-auto">
-                        <Routes>
-                            <Route path="/" element={<Dashboard />} />
-                            <Route path="/talepler" element={<LeaveRequestsPage />} />
-                            <Route path="/yemek-listesi" element={<CafeteriaMenuPage />} />
-                            <Route path="/duyurular" element={<AnnouncementsPage />} />
-                        </Routes>
-                    </main>
-                </div>
-            </div>
-        </BrowserRouter>
+            {/* 2. KORUMALI PORTAL ALANI (Sadece token varsa girilir) */}
+            <Route path="/*" element={
+                <ProtectedRoute>
+                    <div className="min-h-screen bg-slate-100 font-sans text-slate-800 flex flex-col">
+                        <Navbar />
+                        <main className="flex-1 overflow-y-auto">
+                            <Routes>
+                                <Route path="/" element={<Dashboard />} />
+                                <Route path="/duyurular" element={<AnnouncementsPage />} />
+                                <Route path="/announcements" element={<AnnouncementsPage />} />
+                                <Route path="/haberler" element={<NewsPage />} />
+                                <Route path="/news" element={<NewsPage />} />
+                                <Route path="*" element={<Navigate to="/" replace />} />
+                            </Routes>
+                        </main>
+                    </div>
+                </ProtectedRoute>
+            } />
+        </Routes>
     );
 }

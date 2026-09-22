@@ -22,14 +22,6 @@ public class LeaveRequest extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "leave_type", nullable = false, length = 20)
-    private LeaveType leaveType;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    @Builder.Default
-    private LeaveStatus status = LeaveStatus.PENDING;
 
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;

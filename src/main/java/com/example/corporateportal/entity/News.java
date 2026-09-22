@@ -6,26 +6,29 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "announcements")
+@Table(name = "news")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Announcement extends BaseEntity {
+public class News extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, length = 150)
+
+    @Column(nullable = false, length = 200)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String content;
+    @Column(length = 500)
+    private String summary; // Ön yüzde kartta veya manşette görünecek kısa özet
 
-    @Column(name = "is_pinned", nullable = false)
-    @Builder.Default
-    private Boolean isPinned = false;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String content; // Haberin detaylı metni
+
+    @Column(name = "image_url", length = 500)
+    private String imageUrl; // Kapak görseli linki
 
     @Column(name = "is_active", nullable = false)
     @Builder.Default
@@ -37,4 +40,11 @@ public class Announcement extends BaseEntity {
 
     @Column(name = "publish_at")
     private LocalDateTime publishAt;
+
+    @PrePersist
+    protected void onPrePersist() {
+        if (this.publishAt == null) {
+            this.publishAt = LocalDateTime.now();
+        }
+    }
 }

@@ -38,12 +38,7 @@ public class LeaveRequestController {
         return ResponseEntity.ok(leaveRequestService.getMyLeaveRequests(userDetails.getUsername()));
     }
 
-    // Sadece ADMIN veya MANAGER bekleyen talepleri görür
-    @GetMapping("/pending")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<LeaveRequestResponse>> getPendingRequests() {
-        return ResponseEntity.ok(leaveRequestService.getPendingRequests());
-    }
+
 
     // Bekleyen talebi onayla
     @PutMapping("/{id}/approve")

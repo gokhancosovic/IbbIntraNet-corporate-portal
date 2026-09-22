@@ -3,7 +3,6 @@ package com.example.corporateportal.service;
 import com.example.corporateportal.dto.CreateLeaveRequest;
 import com.example.corporateportal.dto.LeaveRequestResponse;
 import com.example.corporateportal.entity.LeaveRequest;
-import com.example.corporateportal.entity.LeaveStatus;
 import com.example.corporateportal.entity.User;
 import com.example.corporateportal.repository.LeaveRequestRepository;
 import com.example.corporateportal.repository.UserRepository;
@@ -31,11 +30,9 @@ public class LeaveRequestService {
 
         LeaveRequest leaveRequest = LeaveRequest.builder()
                 .user(user)
-                .leaveType(request.getLeaveType())
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .reason(request.getReason())
-                .status(LeaveStatus.PENDING)
                 .build();
 
         leaveRequest.setCreatedBy(username);
@@ -55,26 +52,15 @@ public class LeaveRequestService {
                 .toList();
     }
 
-    @Transactional(readOnly = true)
-    public List<LeaveRequestResponse> getPendingRequests() {
-        return leaveRequestRepository.findByStatusOrderByCreatedAtDesc(LeaveStatus.PENDING).stream()
-                .map(this::mapToResponse)
-                .toList();
-    }
-
     @Transactional
     public LeaveRequestResponse approveLeaveRequest(Long requestId, String approverUsername) {
         LeaveRequest leaveRequest = leaveRequestRepository.findById(requestId)
                 .orElseThrow(() -> new IllegalArgumentException("İzin talebi bulunamadı: " + requestId));
 
-        if (leaveRequest.getStatus() != LeaveStatus.PENDING) {
-            throw new IllegalStateException("Sadece beklemedeki talepler onaylanabilir.");
-        }
+
 
         User approver = userRepository.findByUsername(approverUsername)
                 .orElseThrow(() -> new IllegalArgumentException("Onaylayan kullanıcı bulunamadı: " + approverUsername));
-
-        leaveRequest.setStatus(LeaveStatus.APPROVED);
         leaveRequest.setApprovedBy(approver);
         leaveRequest.setUpdatedBy(approverUsername);
 
@@ -86,14 +72,12 @@ public class LeaveRequestService {
         LeaveRequest leaveRequest = leaveRequestRepository.findById(requestId)
                 .orElseThrow(() -> new IllegalArgumentException("İzin talebi bulunamadı: " + requestId));
 
-        if (leaveRequest.getStatus() != LeaveStatus.PENDING) {
-            throw new IllegalStateException("Sadece beklemedeki talepler reddedilebilir.");
-        }
+
 
         User approver = userRepository.findByUsername(approverUsername)
                 .orElseThrow(() -> new IllegalArgumentException("Onaylayan kullanıcı bulunamadı: " + approverUsername));
 
-        leaveRequest.setStatus(LeaveStatus.REJECTED);
+
         leaveRequest.setRejectionReason(reason);
         leaveRequest.setApprovedBy(approver);
         leaveRequest.setUpdatedBy(approverUsername);
@@ -110,8 +94,6 @@ public class LeaveRequestService {
                 .id(lr.getId())
                 .userId(lr.getUser().getId())
                 .userFullName(lr.getUser().getFirstName() + " " + lr.getUser().getLastName())
-                .leaveType(lr.getLeaveType())
-                .status(lr.getStatus())
                 .startDate(lr.getStartDate())
                 .endDate(lr.getEndDate())
                 .reason(lr.getReason())

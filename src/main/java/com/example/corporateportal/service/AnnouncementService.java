@@ -46,7 +46,8 @@ public class AnnouncementService {
         announcement.setCreatedBy(username);
         announcement.setUpdatedBy(username);
 
-        Announcement saved = announcementRepository.save(announcement);
+        Announcement saved = announcementRepository.saveAndFlush(announcement);
+
         return mapToResponse(saved);
     }
 

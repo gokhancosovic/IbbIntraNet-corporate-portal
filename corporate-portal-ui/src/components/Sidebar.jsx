@@ -5,7 +5,8 @@ import {
     Navigation,
     Tv,
     UtensilsCrossed,
-    Bus
+    Bus,
+    LogOut
 } from 'lucide-react';
 
 const menuItems = [
@@ -52,8 +53,13 @@ export default function Sidebar() {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.clear();
+        window.location.href = '/login';
+    };
+
     return (
-        <aside className="w-56 bg-[#003366] text-white flex flex-col items-center py-6 px-3 select-none shrink-0 min-h-screen">
+        <aside className="w-56 bg-[#003366] text-white flex flex-col py-6 px-3 select-none shrink-0 min-h-screen">
             {/* Logo Alanı */}
             <div
                 onClick={() => navigate('/')}
@@ -78,6 +84,17 @@ export default function Sidebar() {
                         </button>
                     );
                 })}
+
+                {/* Çıkış Yap Butonu */}
+                <div className="w-full pt-3 mt-3 border-t border-white/15">
+                    <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold text-rose-300 hover:text-white hover:bg-rose-600/30 transition-all cursor-pointer text-left"
+                    >
+                        <LogOut className="w-5 h-5 shrink-0" />
+                        <span>Çıkış Yap</span>
+                    </button>
+                </div>
             </nav>
         </aside>
     );
