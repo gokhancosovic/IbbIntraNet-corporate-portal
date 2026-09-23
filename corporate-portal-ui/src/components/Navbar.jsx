@@ -41,15 +41,15 @@ export default function Navbar() {
                 <Link to="/duyurular" className="text-xs font-semibold text-slate-600 hover:text-[#003366] transition-colors">
                     Duyurular
                 </Link>
+                <Link to="/cafeteria" className="text-xs font-semibold text-slate-600 hover:text-[#003366] transition-colors">
+                    Yemek Menüsü
+                </Link>
                 <Link to="/rehber" className="text-xs font-semibold text-slate-600 hover:text-[#003366] transition-colors">
                     Rehber
                 </Link>
                 <Link to="/iletisim" className="text-xs font-semibold text-slate-600 hover:text-[#003366] transition-colors">
                     İletişim
                 </Link>
-
-
-
 
                 <div className="h-4 w-px bg-slate-200 mx-1"></div>
 

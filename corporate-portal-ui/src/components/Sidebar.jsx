@@ -5,11 +5,18 @@ import {
     Navigation,
     Tv,
     UtensilsCrossed,
+    Utensils,
     Bus,
     LogOut
 } from 'lucide-react';
 
 const menuItems = [
+    {
+        icon: Utensils,
+        title: 'Yemek Menüsü',
+        url: '/cafeteria',
+        isExternal: false
+    },
     {
         icon: BarChart2,
         title: 'Sayılarla İstanbul',
@@ -55,6 +62,7 @@ export default function Sidebar() {
 
     const handleLogout = () => {
         localStorage.clear();
+        sessionStorage.clear();
         window.location.href = '/login';
     };
 
