@@ -14,7 +14,8 @@ import {
     Headphones,
     X,
     UtensilsCrossed,
-    Calendar
+    Calendar,
+    DoorOpen
 } from 'lucide-react';
 import RightWidget from '../components/RightWidget';
 import MiniCalendarWidget from '../components/MiniCalendarWidget';
@@ -115,6 +116,12 @@ export default function Dashboard() {
             title: 'Telefon Rehberi',
             path: '/rehber',
             badge: 'İç Hatlar'
+        },
+        {
+            icon: DoorOpen,
+            title: 'Toplantı Salonu',
+            path: '/rezervasyon',
+            badge: 'Rezervasyon'
         },
         {
             icon: Landmark,
@@ -297,7 +304,7 @@ export default function Dashboard() {
                 </section>
             </div>
 
-            {/* Sağ Kolon (Hava Durumu, Nöbetçi Eczane, Günün Menüsü vb.) */}
+            {/* Sağ Kolon */}
             <RightWidget />
 
             {/* YEMEK MENÜSÜ MODAL */}

@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class FoodMenuController {
 
+
+// select * frm supporttiket where titleid =1 or desc= like '%yazıcı%'
+
     private final FoodMenuService foodMenuService;
 
     /**

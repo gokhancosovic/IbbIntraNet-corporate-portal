@@ -1,6 +1,12 @@
 package com.example.corporateportal.service;
 
+import com.example.corporateportal.dto.CreateReservationRequest;
 import com.example.corporateportal.dto.ExchangeRateDto;
+import com.example.corporateportal.dto.MeetingReservationResponse;
+import com.example.corporateportal.entity.MeetingReservation;
+import com.example.corporateportal.exception.BusinessException;
+import com.example.corporateportal.repository.MeetingReservationRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -55,6 +61,62 @@ public class ExchangeRateService {
             return ExchangeRateDto.builder()
                     .usd("--")
                     .eur("--")
+                    .build();
+        }
+    }
+
+    @Service
+    @RequiredArgsConstructor
+    public static class MeetingReservationService {
+
+        private final MeetingReservationRepository reservationRepository;
+
+        public MeetingReservationResponse createReservation(CreateReservationRequest request) {
+
+            // 1. İş Kuralı: Bitiş saati başlangıçtan önce olamaz
+            if (request.getEndTime().isBefore(request.getStartTime())) {
+                throw new BusinessException("Toplantı bitiş saati başlangıç saatinden önce olamaz!");
+            }
+
+            // 2. İş Kuralı: Seçilen salonda o saat aralığında çakışma var mı?
+            boolean isConflict = reservationRepository.existsConflict(
+                    request.getRoomName(),
+                    request.getReservationDate(),
+                    request.getStartTime(),
+                    request.getEndTime()
+            );
+
+            if (isConflict) {
+                throw new BusinessException("Seçilen saat aralığında bu salon doludur. Lütfen başka bir saat seçiniz.");
+            }
+
+            // Entity'e dönüştür ve kaydet
+            MeetingReservation reservation = mapToEntity(request);
+            MeetingReservation savedReservation = reservationRepository.save(reservation);
+
+            return mapToResponse(savedReservation);
+        }
+
+        // DTO -> Entity Dönüştürücü
+        private MeetingReservation mapToEntity(CreateReservationRequest request) {
+            return MeetingReservation.builder()
+                    .roomName(request.getRoomName())
+                    .reservationDate(request.getReservationDate())
+                    .startTime(request.getStartTime())
+                    .endTime(request.getEndTime())
+                    .title(request.getTitle())
+                    .build();
+        }
+
+        // Entity -> Response DTO Dönüştürücü
+        private MeetingReservationResponse mapToResponse(MeetingReservation reservation) {
+            return MeetingReservationResponse.builder()
+                    .id(reservation.getId())
+                    .roomName(reservation.getRoomName())
+                    .reservationDate(reservation.getReservationDate())
+                    .startTime(reservation.getStartTime())
+                    .endTime(reservation.getEndTime())
+                    .title(reservation.getTitle())
                     .build();
         }
     }

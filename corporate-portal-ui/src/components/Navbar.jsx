@@ -50,6 +50,9 @@ export default function Navbar() {
                 <Link to="/iletisim" className="text-xs font-semibold text-slate-600 hover:text-[#003366] transition-colors">
                     İletişim
                 </Link>
+                <Link to="/destek-masasi" className="text-xs font-semibold text-slate-600 hover:text-[#003366] transition-colors">
+                    Destek Masası
+                </Link>
 
                 <div className="h-4 w-px bg-slate-200 mx-1"></div>
 

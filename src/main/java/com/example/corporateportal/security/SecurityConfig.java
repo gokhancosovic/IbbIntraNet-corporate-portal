@@ -58,6 +58,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/announcements/**", "/api/sliders/**", "/api/news/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/announcements/**", "/api/sliders/**", "/api/news/**").authenticated()
                         .requestMatchers("/api/widgets/**").permitAll()
+                        .requestMatchers("/api/reservations/**").authenticated()
                         // Geri kalan tüm istekler için oturum zorunlu
                         .anyRequest().authenticated()
                 )

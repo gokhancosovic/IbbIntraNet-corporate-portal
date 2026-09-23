@@ -7,6 +7,8 @@ import AnnouncementsPage from './pages/AnnouncementsPage';
 import NewsPage from './pages/NewsPage';
 import CafeteriaMenuPage from './pages/CafeteriaMenuPage';
 import Directory from './pages/Directory';
+import HelpdeskPage from './pages/HelpdeskPage';
+import MeetingRoomsPage from './pages/MeetingRoomsPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 export default function App() {
@@ -43,6 +45,15 @@ export default function App() {
                                     {/* YEMEK MENÜSÜ */}
                                     <Route path="/yemek-menusu" element={<CafeteriaMenuPage />} />
                                     <Route path="/cafeteria" element={<CafeteriaMenuPage />} />
+
+                                    {/* IT DESTEK MASASI (HELPDESK) */}
+                                    <Route path="/destek-masasi" element={<HelpdeskPage />} />
+                                    <Route path="/helpdesk" element={<HelpdeskPage />} />
+
+                                    {/* TOPLANTI SALONU REZERVASYONU */}
+                                    <Route path="/rezervasyon" element={<MeetingRoomsPage />} />
+                                    <Route path="/toplanti-salonu" element={<MeetingRoomsPage />} />
+                                    <Route path="/meeting-rooms" element={<MeetingRoomsPage />} />
 
                                     {/* BULUNAMAYAN ROTALAR */}
                                     <Route path="*" element={<Navigate to="/" replace />} />

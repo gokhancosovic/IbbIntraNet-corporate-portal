@@ -40,7 +40,6 @@ public class DepartmentService {
                 .name(request.getName())
                 .description(request.getDescription())
                 .build();
-
         Department saved = departmentRepository.save(department);
         return mapToResponse(saved);
     }
